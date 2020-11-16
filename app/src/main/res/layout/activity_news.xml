@@ -12,15 +12,15 @@
         android:layout_above="@+id/bottom_navigation">
 
         <TextView
-            android:id="@+id/homeActivityTitle"
+            android:id="@+id/newsActivityTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:text="Home"
+            android:text="News"
             android:textAlignment="center"
             android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="72dp"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
