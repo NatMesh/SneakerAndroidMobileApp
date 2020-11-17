@@ -11,18 +11,14 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation">
 
-        <TextView
-            android:id="@+id/newsActivityTitle"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="News"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:layout_marginTop="72dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:scrollbars="vertical"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

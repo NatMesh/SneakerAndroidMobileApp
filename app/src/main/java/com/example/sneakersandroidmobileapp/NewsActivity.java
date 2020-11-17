@@ -11,11 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class NewsActivity extends AppCompatActivity {
+    //ArrayList to store our NewsItems for sneaker news
+    ArrayList<NewsItem> newsItems;
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+
+        newsItems = new ArrayList<>();
+
 
         //declare and grab our bottom navigation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
