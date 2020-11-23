@@ -2,7 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,46 +12,48 @@
 
         <ImageView
             android:id="@+id/newsImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="2dp"
+            android:scaleType="fitXY"/>
+
 
         <TextView
             android:id="@+id/newsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/newsImage"
             android:text="Title"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/newsImage"
-            android:layout_marginStart="16dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/newsDescription"
+            android:id="@+id/newsLink"
+            android:autoLink="web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/newsImage"
             android:layout_below="@+id/newsTitle"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_toEndOf="@+id/newsImage"
+            android:text="We Got Sneakers News"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/newsPubDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/newsLink"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/newsImage"
             android:text="Date"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/newsImage"
-            android:layout_below="@+id/newsDescription"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="12sp"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
