@@ -7,16 +7,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp">
 
         <ImageView
             android:id="@+id/newsImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:minHeight="150dp"
             android:padding="2dp"
-            android:scaleType="fitXY"/>
-
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/newsTitle"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,6 +17,53 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //CALL METHOD HERE THAT WILL DELETE ALL DATA FROM OUR TABLES
+
+        //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
+        SneakerModel sneakerModel = new SneakerModel();;
+
+
+
+
+        try{
+            //set instance var for our sneakerModel object
+            sneakerModel.setId(-1);
+            sneakerModel.setBrand("Nike");
+            sneakerModel.setCategory("Basketball");
+            sneakerModel.setMainColour("Black");
+            sneakerModel.setDesigner("Jason Petrie");
+            sneakerModel.setColourWay("Black/White-Gold");
+            sneakerModel.setGender("men");
+            sneakerModel.setGridPicture("https://image.goat.com/240/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");
+            sneakerModel.setMainPicture("https://image.goat.com/crop/750/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");;
+            sneakerModel.setMidsole("Air");
+            sneakerModel.setName("LeBron 15 'Equality' PE");
+            sneakerModel.setNickName("Equality");
+            sneakerModel.setReleaseDate("2018-03-03");
+            sneakerModel.setPriceCents(200000);
+            sneakerModel.setShoeStory("The LeBron 15 ‘Equality’ PE was worn by LeBron James’ during key games in the 2018 NBA season. As a special release benefiting " +
+                    "the Smithsonian National Museum of African American History and Culture, 400 pairs were distributed through a draw system (200 in black colorway, " +
+                    "200 in white colorway). This pack combines both EQUALITY shoes together, a strong message from Nike’s ‘Equality’ campaign to promote fairness and " +
+                    "respect they see in sport and translate them off the field.");
+            sneakerModel.setUpperMaterial("");
+
+            //Creates toast object for testing REMOVE LATER
+            Toast.makeText(MainActivity.this, "Object was successfully created", Toast.LENGTH_LONG).show();
+        } catch (Exception e){
+            Toast.makeText(MainActivity.this, "error in initializing sneakerModel object", Toast.LENGTH_LONG).show();
+        }
+
+
+        //Call our DataBaseHelper object
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
+        //we try the insert method we created addSneaker() which returns a boolean for whether it was successful or not
+        //boolean success = dataBaseHelper.addSneaker(sneakerModel);
+
+        //tells us via toast
+        //Toast.makeText(MainActivity.this, "Sucess= " + success, Toast.LENGTH_LONG).show();
+
+        ///////////////////////////////////////////////////////
 
         //declare and grab our bottom navigation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
