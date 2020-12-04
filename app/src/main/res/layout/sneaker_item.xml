@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:padding="2dp"
+    >
+    <TextView
+        android:id="@+id/sneakerReleaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"/>
+
+
+    <ImageView
+        android:id="@+id/sneakerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@+id/sneakerReleaseDate"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/sneakerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sneakerImage"
+        android:text="Name"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/sneakerPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sneakerName"
+        android:text="Price"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

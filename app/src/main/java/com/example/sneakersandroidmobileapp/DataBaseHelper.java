@@ -190,4 +190,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    //Create a method to search based on object id mainly for the click purpose on our gridview
+
+    //Create a method to work with a search bar and use a LIKE query to find sneakers based on user input
 }

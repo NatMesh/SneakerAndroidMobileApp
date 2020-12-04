@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter sneakerArrayAdapter;
     DataBaseHelper dataBaseHelper;
+    GridView sneakerGridview;
 
 
     @Override
@@ -31,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
         //Call our DataBaseHelper object
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
-        //CALL METHOD HERE THAT WILL DELETE ALL DATA FROM OUR TABLES
+        //instantiates our gridview
+        sneakerGridview = findViewById(R.id.sneakerGridview);
+
+
 
         //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
         SneakerModel sneakerModel = new SneakerModel();;
@@ -78,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
         //shows us via toast all the sneakers in our db
         //Toast.makeText(MainActivity.this, allSneakers.toString(), Toast.LENGTH_SHORT).show();
-        sneakerArrayAdapter = new ArrayAdapter<SneakerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAllSneakers());
+        //sneakerArrayAdapter = new ArrayAdapter<SneakerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAllSneakers());
+
+
 //        lvSneakers.setAdapter(sneakerArrayAdapter);
 //
 //        //defines our click event for the listview
