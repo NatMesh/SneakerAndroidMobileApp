@@ -19,10 +19,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView lvSneakers;
     ArrayAdapter sneakerArrayAdapter;
     DataBaseHelper dataBaseHelper;
-    int x = 99;
 
 
     @Override
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvSneakers = findViewById(R.id.lvSneakers);
         //Call our DataBaseHelper object
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
@@ -82,20 +79,20 @@ public class MainActivity extends AppCompatActivity {
         //shows us via toast all the sneakers in our db
         //Toast.makeText(MainActivity.this, allSneakers.toString(), Toast.LENGTH_SHORT).show();
         sneakerArrayAdapter = new ArrayAdapter<SneakerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAllSneakers());
-        lvSneakers.setAdapter(sneakerArrayAdapter);
-
-        //defines our click event for the listview
-        lvSneakers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //we find the specific object clicked and store it
-                SneakerModel clickedSneaker = (SneakerModel) parent.getItemAtPosition(position);
-                //Once we have our chosen object to delete we can call our delete method
-                dataBaseHelper.deleteSneaker(clickedSneaker);
-                Toast.makeText(MainActivity.this, "Deleted " + clickedSneaker.getName(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        lvSneakers.setAdapter(sneakerArrayAdapter);
+//
+//        //defines our click event for the listview
+//        lvSneakers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //we find the specific object clicked and store it
+//                SneakerModel clickedSneaker = (SneakerModel) parent.getItemAtPosition(position);
+//                //Once we have our chosen object to delete we can call our delete method
+//                dataBaseHelper.deleteSneaker(clickedSneaker);
+//                Toast.makeText(MainActivity.this, "Deleted " + clickedSneaker.getName(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         ///////////////////////////////////////////////////////
 
