@@ -11,16 +11,13 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation">
 
-        <TextView
-            android:id="@+id/homeActivityTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:text="Home"
-            android:textAlignment="center"
-            android:textSize="30sp"
+
+
+        <ListView
+            android:id="@+id/lvSneakers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

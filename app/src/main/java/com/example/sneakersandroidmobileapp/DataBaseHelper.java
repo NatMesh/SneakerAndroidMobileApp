@@ -2,10 +2,14 @@ package com.example.sneakersandroidmobileapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 //Define static values for each column name in the database.
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -112,5 +116,78 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //CREATE METHOD TO DELETE ALL DATA FROM TABLES HERE
+    //gets all the records from our Sneakers table and returns it as a list for us to do as we please(display most likely)
+    public List<SneakerModel> getAllSneakers(){
+        List<SneakerModel> returnList = new ArrayList<>();
+
+        //our query string
+        String queryString = "SELECT * FROM " + SNEAKER_TABLE;
+
+        //NOTE: getWritableDatabase locks the data file so other processes may not access it.
+        //use getWritableDatabase only when you plan to insert, update, or delete records.
+
+        //use getReadableDatabase when you plan to SELECT items from the database.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //A Cursor is the result set from a SQL statement
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        //checks if we got results
+            //cursor.moveToFirst returns a true if there were items selected and false if no items were selected
+        if(cursor.moveToFirst()){
+            //loop through the cursor (result set) and create new sneaker objects. Put them into the return list.
+            do{
+                //stores the id number for our sneaker
+                //it takes in a column index which is the order of the column it is pulling from
+                int sneakerID = cursor.getInt(0);
+                String sneakerBrand = cursor.getString(1);
+                String sneakerCategory = cursor.getString(2);
+                String sneakerMainColour = cursor.getString(3);
+                String sneakerDesigner = cursor.getString(4);
+                String sneakerColourWay = cursor.getString(5);
+                String sneakerGender = cursor.getString(6);
+                String sneakerGridPicture = cursor.getString(7);
+                String sneakerMainPicture = cursor.getString(8);
+                String sneakerMidsole = cursor.getString(9);
+                String sneakerName = cursor.getString(10);
+                String sneakerNickname = cursor.getString(11);
+                String sneakerReleaseDate = cursor.getString(12);
+                int sneakerPriceCents = cursor.getInt(13);
+                String sneakerShoeStory = cursor.getString(14);
+                String sneakerUpperMaterial = cursor.getString(15);
+
+                SneakerModel sneakerModel = new SneakerModel(sneakerID, sneakerBrand, sneakerCategory, sneakerMainColour, sneakerDesigner, sneakerColourWay, sneakerGender,
+                        sneakerGridPicture, sneakerMainPicture, sneakerMidsole, sneakerName, sneakerNickname, sneakerReleaseDate, sneakerPriceCents, sneakerShoeStory,
+                        sneakerUpperMaterial);
+                returnList.add(sneakerModel);
+
+            } while(cursor.moveToNext());
+        }
+        else
+        {
+            //failure. do not add anything to the list.
+        }
+
+        //when finished writing or reading to the db make sure to close the cursor and the db when finished.
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    //Deletes a record from our sneaker database
+    //This method uses a DAO style. Data Access Object(DAO) is considered a best-practice in software design.
+    public boolean deleteSneaker(SneakerModel sneakerModel){
+        //find sneakerModel in the database. if it is found, delete it and return true.
+        //if not found, return false
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + SNEAKER_TABLE + " WHERE " + COLUMN_ID + " = " + sneakerModel.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
