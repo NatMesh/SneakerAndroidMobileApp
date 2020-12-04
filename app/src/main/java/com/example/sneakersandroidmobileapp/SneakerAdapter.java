@@ -45,6 +45,8 @@ public class SneakerAdapter extends RecyclerView.Adapter<SneakerAdapter.SneakerV
         holder.sneakerPrice.setText(price);
     }
 
+
+
     @Override
     public int getItemCount() {
         return mSneakerList.size();

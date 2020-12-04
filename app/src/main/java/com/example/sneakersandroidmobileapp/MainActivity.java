@@ -2,9 +2,11 @@ package com.example.sneakersandroidmobileapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +16,28 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayAdapter sneakerArrayAdapter;
-    DataBaseHelper dataBaseHelper;
-    GridView sneakerGridview;
+    private ArrayAdapter sneakerArrayAdapter;
+    private DataBaseHelper dataBaseHelper;
+    private GridView sneakerGridview;
+    //private RecyclerView mRecyclerView;
+    private SneakerAdapter mSneakerAdapter;
+    private List<SneakerModel> SneakerList;
+    private RequestQueue mRequestQueue;
 
 
     @Override
@@ -37,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
         sneakerGridview = findViewById(R.id.sneakerGridview);
 
 
-
         //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
         SneakerModel sneakerModel = new SneakerModel();;
 
+        //This method parses our local json file and adds the objects to our sneakerList collection object
+        parseJson();
 
 
 
@@ -156,6 +172,63 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void parseJson() {
+        //We create a String to store our json
+        String json;
+
+        try{
+            //grabs the inputstream we will be reading from
+            InputStream inputStream = getAssets().open("GoatSneakers.json");
+            //figures out the size of our document
+            int size = inputStream.available();
+            //we create an array of bytes based on the size of the file we are reading
+            byte[] buffer = new byte[size];
+
+            inputStream.read(buffer);
+            inputStream.close();
+
+            //
+            json = new String(buffer, "UTF-8");
+
+            //Creates a json object based on the data we read the local json file
+            JSONObject jsonObject = new JSONObject(json);
+            //grabs the array of key value pairs from our json object
+            JSONArray jsonArray = jsonObject.getJSONArray("sneakers");
+
+
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject sneaker = jsonArray.getJSONObject(i);
+                SneakerModel sneakerModel = new SneakerModel();
+
+                sneakerModel.setId(-1);
+                sneakerModel.setBrand(sneaker.getString("brand_name"));
+                sneakerModel.setCategory(sneaker.getString("category"));
+                sneakerModel.setMainColour(sneaker.getString("color"));
+                sneakerModel.setDesigner(sneaker.getString("designer"));
+                sneakerModel.setColourWay(sneaker.getString("details"));
+                sneakerModel.setGender(sneaker.getJSONArray("gender").get(0).toString());
+                sneakerModel.setGridPicture(sneaker.getString("grid_picture_url"));
+                sneakerModel.setMainPicture(sneaker.getString("main_picture_url"));;
+                sneakerModel.setMidsole(sneaker.getString("midsole"));
+                sneakerModel.setName(sneaker.getString("name"));
+                sneakerModel.setNickName(sneaker.getString("nickname"));
+                sneakerModel.setReleaseDate(sneaker.getString("release_date"));
+                sneakerModel.setPriceCents(sneaker.getInt("retail_price_cents"));
+                sneakerModel.setShoeStory(sneaker.getString("story_html"));
+                sneakerModel.setUpperMaterial(sneaker.getString("upper_material"));
+
+                Log.d("test sneaker", sneakerModel.getName() + "    " + jsonArray.length());
+                //boolean success = dataBaseHelper.addSneaker(sneakerModel);
+            }
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 
 }
