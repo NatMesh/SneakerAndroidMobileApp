@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvSneakers;
     ArrayAdapter sneakerArrayAdapter;
     DataBaseHelper dataBaseHelper;
+    int x = 99;
 
 
     @Override
