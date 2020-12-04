@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter sneakerArrayAdapter;
     DataBaseHelper dataBaseHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
