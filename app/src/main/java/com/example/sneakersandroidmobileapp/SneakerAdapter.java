@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SneakerAdapter extends BaseAdapter {
+public class SneakerAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<SneakerModel> sneakerList;
     private LayoutInflater layoutInflater;

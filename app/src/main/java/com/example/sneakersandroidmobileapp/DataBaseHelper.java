@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 
 import androidx.annotation.Nullable;
 
@@ -206,6 +207,63 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     //Create a method to search based on object id mainly for the click purpose on our gridview
+    public ArrayList<SneakerModel> searchSneakers(CharSequence constraint){
+        //The returned ArrayList with our data
+        ArrayList<SneakerModel> sneakerSearchList = new ArrayList<>();
+
+        //make a call to get readable access to our db
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //We do some string mods to make sure the user search term is easily read by the database
+        String search = constraint.toString().toLowerCase().trim();
+
+        //Create our query to find the user's search
+        String query = "SELECT * FROM " + SNEAKER_TABLE + " WHERE " + COLUMN_NAME + " LIKE '%"+search+"%'";
+
+        //A Cursor is the result set from a SQL statement
+        Cursor cursor = db.rawQuery(query, null);
+
+        //checks if we got results
+        //cursor.moveToFirst returns a true if there were items selected and false if no items were selected
+        if(cursor.moveToFirst()){
+            //loop through the cursor (result set) and create new sneaker objects. Put them into the return list.
+            do{
+                //stores the id number for our sneaker
+                //it takes in a column index which is the order of the column it is pulling from
+                int sneakerID = cursor.getInt(0);
+                String sneakerBrand = cursor.getString(1);
+                String sneakerCategory = cursor.getString(2);
+                String sneakerMainColour = cursor.getString(3);
+                String sneakerDesigner = cursor.getString(4);
+                String sneakerColourWay = cursor.getString(5);
+                String sneakerGender = cursor.getString(6);
+                String sneakerGridPicture = cursor.getString(7);
+                String sneakerMainPicture = cursor.getString(8);
+                String sneakerMidsole = cursor.getString(9);
+                String sneakerName = cursor.getString(10);
+                String sneakerNickname = cursor.getString(11);
+                String sneakerReleaseDate = cursor.getString(12);
+                int sneakerPriceCents = cursor.getInt(13);
+                String sneakerShoeStory = cursor.getString(14);
+                String sneakerUpperMaterial = cursor.getString(15);
+
+                SneakerModel sneakerModel = new SneakerModel(sneakerID, sneakerBrand, sneakerCategory, sneakerMainColour, sneakerDesigner, sneakerColourWay, sneakerGender,
+                        sneakerGridPicture, sneakerMainPicture, sneakerMidsole, sneakerName, sneakerNickname, sneakerReleaseDate, sneakerPriceCents, sneakerShoeStory,
+                        sneakerUpperMaterial);
+                sneakerSearchList.add(sneakerModel);
+
+            } while(cursor.moveToNext());
+        }
+        else
+        {
+            //failure. do not add anything to the list.
+        }
+
+        //when finished writing or reading to the db make sure to close the cursor and the db when finished.
+        cursor.close();
+        db.close();
+        return sneakerSearchList;
+    }
 
     //Create a method to work with a search bar and use a LIKE query to find sneakers based on user input
 }

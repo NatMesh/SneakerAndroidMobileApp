@@ -2,6 +2,8 @@ package com.example.sneakersandroidmobileapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<SneakerModel> sneakerList;
     private SneakerAdapter sneakerAdapter;
     private RequestQueue mRequestQueue;
+    private MaterialSearchBar materialSearchBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +41,43 @@ public class SearchActivity extends AppCompatActivity {
 
         //instantiates our gridview
         sneakerGridview = findViewById(R.id.sneakerGridview);
+
+        //initializes our search bar
+        materialSearchBar = findViewById(R.id.searchBar);
+        //Set the text for the hint
+        materialSearchBar.setHint("Search");
+        materialSearchBar.setCardViewElevation(10);
+        //Sets the event for when a user preforms a search on our sneakers table
+        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+                if(!enabled){
+                    sneakerList = dataBaseHelper.getAllSneakers();
+                    //When user closes search we simply show them all listings
+                    //initializes our custom array adapter class with our context set to this activity and an array list which fetches all
+                    //records from our sneakers table.
+                    sneakerAdapter = new SneakerAdapter(SearchActivity.this, sneakerList);
+                    //This sets our gridview to display the data pulled from
+                    sneakerGridview.setAdapter(sneakerAdapter);
+
+                }
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+                sneakerList = dataBaseHelper.searchSneakers(text);
+                //initializes our custom array adapter class with our context set to this activity and an array list which fetches all
+                //records from our sneakers table BASED ON USER SEARCH TERMS PROVIDED.
+                sneakerAdapter = new SneakerAdapter(SearchActivity.this, sneakerList);
+                //This sets our gridview to display the data pulled from
+                sneakerGridview.setAdapter(sneakerAdapter);
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+
+            }
+        });
 
         //set our list of sneakers based on what is in our database.
         sneakerList = dataBaseHelper.getAllSneakers();

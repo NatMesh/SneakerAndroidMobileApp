@@ -57,7 +57,7 @@ public class SneakerDetailsActivity extends AppCompatActivity {
             sneakerReleaseDate.setText(ReleaseDate);
             sneakerStory.setText(sneakerStoryFull);
 
-            if(sneakerColourwayDetail.length() >= 23){
+            if(sneakerColourwayDetail.length() > 23){
                 colourway.setLines(2);
             }
             else if(sneakerColourwayDetail.length() > 23 && sneakerColourwayDetail.length() < 100)
