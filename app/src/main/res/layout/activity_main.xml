@@ -11,14 +11,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation">
 
-        <GridView
-            android:id="@+id/sneakerGridview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numColumns="2"
-            android:layout_marginTop="10dp"
-            android:horizontalSpacing="4dp"
-            android:verticalSpacing="4dp"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/sneaker_collage"
+            android:scaleType="fitXY"/>
 
     </LinearLayout>
 

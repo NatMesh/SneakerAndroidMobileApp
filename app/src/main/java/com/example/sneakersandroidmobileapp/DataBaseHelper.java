@@ -117,8 +117,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     //gets all the records from our Sneakers table and returns it as a list for us to do as we please(display most likely)
-    public List<SneakerModel> getAllSneakers(){
-        List<SneakerModel> returnList = new ArrayList<>();
+    public ArrayList<SneakerModel> getAllSneakers(){
+        ArrayList<SneakerModel> returnList = new ArrayList<>();
 
         //our query string
         String queryString = "SELECT * FROM " + SNEAKER_TABLE;
@@ -181,6 +181,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //if not found, return false
         SQLiteDatabase db = this.getWritableDatabase();
         String queryString = "DELETE FROM " + SNEAKER_TABLE + " WHERE " + COLUMN_ID + " = " + sneakerModel.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    //DELETE ALL RECORDS from SNEAKER_TABLE
+    public boolean deleteAllSneaker(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + SNEAKER_TABLE;
 
         Cursor cursor = db.rawQuery(queryString, null);
 

@@ -6,25 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation">
 
-        <TextView
-            android:id="@+id/searchActivityTitle"
-            android:layout_width="match_parent"
+        <GridView
+            android:id="@+id/sneakerGridview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:layout_marginTop="72dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:numColumns="2"
+            android:layout_marginTop="5dp"
+            android:horizontalSpacing="4dp"
+            android:verticalSpacing="4dp"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

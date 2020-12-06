@@ -4,18 +4,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 public class SearchActivity extends AppCompatActivity {
+
+    private DataBaseHelper dataBaseHelper;
+    private GridView sneakerGridview;
+    //private RecyclerView mRecyclerView;
+    private SneakerAdapter sneakerAdapter;
+    private List<SneakerModel> SneakerList;
+    private RequestQueue mRequestQueue;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        //Call our DataBaseHelper object
+        dataBaseHelper = new DataBaseHelper(SearchActivity.this);
+
+        //instantiates our gridview
+        sneakerGridview = findViewById(R.id.sneakerGridview);
+
+        //initializes our custom array adapter class with our context set to this activity and an array list which fetches all
+        //records from our sneakers table.
+        sneakerAdapter = new SneakerAdapter(SearchActivity.this, dataBaseHelper.getAllSneakers());
+
+        //This sets our gridview to display the data pulled from
+        sneakerGridview.setAdapter(sneakerAdapter);
+
 
         //declare and grab our bottom navigation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);

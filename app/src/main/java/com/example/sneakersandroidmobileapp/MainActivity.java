@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,13 +32,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayAdapter sneakerArrayAdapter;
-    private DataBaseHelper dataBaseHelper;
-    private GridView sneakerGridview;
+    //private DataBaseHelper dataBaseHelper;
+    //private GridView sneakerGridview;
     //private RecyclerView mRecyclerView;
-    private SneakerAdapter mSneakerAdapter;
-    private List<SneakerModel> SneakerList;
-    private RequestQueue mRequestQueue;
+    //private SneakerAdapter sneakerAdapter;
 
 
     @Override
@@ -46,47 +44,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Call our DataBaseHelper object
-        dataBaseHelper = new DataBaseHelper(MainActivity.this);
+        //dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
         //instantiates our gridview
-        sneakerGridview = findViewById(R.id.sneakerGridview);
+        //sneakerGridview = findViewById(R.id.sneakerGridview);
 
+        //sneakerAdapter = new SneakerAdapter(MainActivity.this, dataBaseHelper.getAllSneakers());
 
-        //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
-        SneakerModel sneakerModel = new SneakerModel();;
+        //sneakerGridview.setAdapter(sneakerAdapter);
 
         //This method parses our local json file and adds the objects to our sneakerList collection object
         parseJson();
 
 
+        //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
+//        SneakerModel sneakerModel = new SneakerModel();
 
-        try{
-            //set instance var for our sneakerModel object
-            sneakerModel.setId(-1);
-            sneakerModel.setBrand("Nike");
-            sneakerModel.setCategory("Basketball");
-            sneakerModel.setMainColour("Black");
-            sneakerModel.setDesigner("Jason Petrie");
-            sneakerModel.setColourWay("Black/White-Gold");
-            sneakerModel.setGender("men");
-            sneakerModel.setGridPicture("https://image.goat.com/240/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");
-            sneakerModel.setMainPicture("https://image.goat.com/crop/750/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");;
-            sneakerModel.setMidsole("Air");
-            sneakerModel.setName("LeBron 15 'Equality' PE");
-            sneakerModel.setNickName("Equality");
-            sneakerModel.setReleaseDate("2018-03-03");
-            sneakerModel.setPriceCents(200000);
-            sneakerModel.setShoeStory("The LeBron 15 ‘Equality’ PE was worn by LeBron James’ during key games in the 2018 NBA season. As a special release benefiting " +
-                    "the Smithsonian National Museum of African American History and Culture, 400 pairs were distributed through a draw system (200 in black colorway, " +
-                    "200 in white colorway). This pack combines both EQUALITY shoes together, a strong message from Nike’s ‘Equality’ campaign to promote fairness and " +
-                    "respect they see in sport and translate them off the field.");
-            sneakerModel.setUpperMaterial("");
-
-            //Creates toast object for testing REMOVE LATER
-            Toast.makeText(MainActivity.this, "Object was successfully created", Toast.LENGTH_LONG).show();
-        } catch (Exception e){
-            Toast.makeText(MainActivity.this, "error in initializing sneakerModel object", Toast.LENGTH_LONG).show();
-        }
+//        try{
+//            //set instance var for our sneakerModel object
+//            sneakerModel.setId(-1);
+//            sneakerModel.setBrand("Nike");
+//            sneakerModel.setCategory("Basketball");
+//            sneakerModel.setMainColour("Black");
+//            sneakerModel.setDesigner("Jason Petrie");
+//            sneakerModel.setColourWay("Black/White-Gold");
+//            sneakerModel.setGender("men");
+//            sneakerModel.setGridPicture("https://image.goat.com/240/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");
+//            sneakerModel.setMainPicture("https://image.goat.com/crop/750/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");;
+//            sneakerModel.setMidsole("Air");
+//            sneakerModel.setName("LeBron 15 'Equality' PE");
+//            sneakerModel.setNickName("Equality");
+//            sneakerModel.setReleaseDate("2018-03-03");
+//            sneakerModel.setPriceCents(200000);
+//            sneakerModel.setShoeStory("The LeBron 15 ‘Equality’ PE was worn by LeBron James’ during key games in the 2018 NBA season. As a special release benefiting " +
+//                    "the Smithsonian National Museum of African American History and Culture, 400 pairs were distributed through a draw system (200 in black colorway, " +
+//                    "200 in white colorway). This pack combines both EQUALITY shoes together, a strong message from Nike’s ‘Equality’ campaign to promote fairness and " +
+//                    "respect they see in sport and translate them off the field.");
+//            sneakerModel.setUpperMaterial("");
+//
+//            //Creates toast object for testing REMOVE LATER
+//            Toast.makeText(MainActivity.this, "Object was successfully created", Toast.LENGTH_LONG).show();
+//        } catch (Exception e){
+//            Toast.makeText(MainActivity.this, "error in initializing sneakerModel object", Toast.LENGTH_LONG).show();
+//        }
 
 
 
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
                 sneakerModel.setId(-1);
                 sneakerModel.setBrand(sneaker.getString("brand_name"));
-                sneakerModel.setCategory(sneaker.getString("category"));
+                sneakerModel.setCategory(sneaker.getJSONArray("category").get(0).toString());
                 sneakerModel.setMainColour(sneaker.getString("color"));
                 sneakerModel.setDesigner(sneaker.getString("designer"));
                 sneakerModel.setColourWay(sneaker.getString("details"));
@@ -218,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
                 sneakerModel.setUpperMaterial(sneaker.getString("upper_material"));
 
                 Log.d("test sneaker", sneakerModel.getName() + "    " + jsonArray.length());
-                //boolean success = dataBaseHelper.addSneaker(sneakerModel);
             }
 
         } catch (IOException e)

@@ -3,20 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
-    android:padding="2dp"
-    >
+    android:padding="10dp">
     <TextView
         android:id="@+id/sneakerReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"/>
+        android:text="Date"
+        android:textStyle="bold"/>
 
 
     <ImageView
         android:id="@+id/sneakerImage"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         android:layout_below="@+id/sneakerReleaseDate"
         android:scaleType="fitXY"
@@ -28,7 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sneakerImage"
         android:text="Name"
-        android:layout_centerHorizontal="true"/>
+        android:gravity="center"
+        android:textStyle="bold"
+        android:paddingBottom="10dp"/>
 
     <TextView
         android:id="@+id/sneakerPrice"
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sneakerName"
         android:text="Price"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
