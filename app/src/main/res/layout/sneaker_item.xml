@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:textStyle="bold"/>
-
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
 
     <ImageView
         android:id="@+id/sneakerImage"
@@ -29,7 +29,8 @@
         android:text="Name"
         android:gravity="center"
         android:textStyle="bold"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/sneakerPrice"
@@ -38,6 +39,7 @@
         android:layout_below="@+id/sneakerName"
         android:text="Price"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
         android:textStyle="bold"/>
 
 </RelativeLayout>

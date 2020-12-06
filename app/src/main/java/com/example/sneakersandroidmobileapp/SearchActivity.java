@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
@@ -20,8 +23,8 @@ public class SearchActivity extends AppCompatActivity {
     private DataBaseHelper dataBaseHelper;
     private GridView sneakerGridview;
     //private RecyclerView mRecyclerView;
+    private ArrayList<SneakerModel> sneakerList;
     private SneakerAdapter sneakerAdapter;
-    private List<SneakerModel> SneakerList;
     private RequestQueue mRequestQueue;
 
     @Override
@@ -35,12 +38,34 @@ public class SearchActivity extends AppCompatActivity {
         //instantiates our gridview
         sneakerGridview = findViewById(R.id.sneakerGridview);
 
+        //set our list of sneakers based on what is in our database.
+        sneakerList = dataBaseHelper.getAllSneakers();
+
         //initializes our custom array adapter class with our context set to this activity and an array list which fetches all
         //records from our sneakers table.
-        sneakerAdapter = new SneakerAdapter(SearchActivity.this, dataBaseHelper.getAllSneakers());
+        sneakerAdapter = new SneakerAdapter(SearchActivity.this, sneakerList);
 
         //This sets our gridview to display the data pulled from
         sneakerGridview.setAdapter(sneakerAdapter);
+
+        //click event for our grid view when an item is clicked
+        sneakerGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Based on the item clicked we get the object so we can use that data on another activity
+                SneakerModel selectedSneaker = sneakerList.get(i);
+
+                Intent intent = new Intent(SearchActivity.this, SneakerDetailsActivity.class);
+                intent.putExtra("sneakerImage", selectedSneaker.getMainPicture());
+                intent.putExtra("sneakerName", selectedSneaker.getName());
+                intent.putExtra("sneakerBrand", selectedSneaker.getBrand());
+                intent.putExtra("sneakerColourway", selectedSneaker.getColourWay());
+                intent.putExtra("sneakerRetailPrice", selectedSneaker.getPriceCents());
+                intent.putExtra("sneakerReleaseDate", selectedSneaker.getReleaseDate());
+                intent.putExtra("sneakerStory", selectedSneaker.getShoeStory());
+                startActivity(intent);
+            }
+        });
 
 
         //declare and grab our bottom navigation view

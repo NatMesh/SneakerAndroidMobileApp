@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,12 +21,15 @@ public class SneakerAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<SneakerModel> sneakerList;
     private LayoutInflater layoutInflater;
+    private AdapterView.OnItemClickListener listener;
+
 
     public SneakerAdapter(Context context, ArrayList<SneakerModel> sneakerList){
         this.context = context;
         this.sneakerList = sneakerList;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
 
 
     @Override
