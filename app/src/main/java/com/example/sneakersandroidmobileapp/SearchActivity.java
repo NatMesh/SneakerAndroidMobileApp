@@ -28,7 +28,6 @@ public class SearchActivity extends AppCompatActivity {
     //private RecyclerView mRecyclerView;
     private ArrayList<SneakerModel> sneakerList;
     private SneakerAdapter sneakerAdapter;
-    private RequestQueue mRequestQueue;
     private MaterialSearchBar materialSearchBar;
 
     @Override
@@ -97,6 +96,7 @@ public class SearchActivity extends AppCompatActivity {
                 SneakerModel selectedSneaker = sneakerList.get(i);
 
                 Intent intent = new Intent(SearchActivity.this, SneakerDetailsActivity.class);
+                intent.putExtra("sneakerId", selectedSneaker.getId());
                 intent.putExtra("sneakerImage", selectedSneaker.getMainPicture());
                 intent.putExtra("sneakerName", selectedSneaker.getName());
                 intent.putExtra("sneakerBrand", selectedSneaker.getBrand());

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,14 +15,69 @@
             android:id="@+id/profileActivityTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Profile"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:layout_marginTop="72dp"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/profileActivityTitle"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/profileActivityTitle"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <Button
+            android:id="@+id/signOut"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="152dp"
+            android:layout_marginTop="52dp"
+            android:text="Sign Out"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            android:onClick="logout"/>
+
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="24dp"
+            android:text="Sign In"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signOut"
+            android:onClick="toSignIn"/>
+
+        <Button
+            android:id="@+id/signUp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="32dp"
+            android:text="Sign Up"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signIn"
+            android:onClick="toSignUp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

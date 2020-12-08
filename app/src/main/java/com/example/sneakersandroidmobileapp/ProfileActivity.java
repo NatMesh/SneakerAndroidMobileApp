@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,10 +15,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
+    TextView name;
+    TextView email;
+    Button signOut;
+    Button signIn;
+    Button signUp;
+    SessionVariableManager sessionVariableManager;
+    DataBaseHelper dataBaseHelper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        signOut = findViewById(R.id.signOut);
+        signIn = findViewById(R.id.signIn);
+        signUp = findViewById(R.id.signUp);
+
+        sessionVariableManager = new SessionVariableManager(ProfileActivity.this);
+        int userId = sessionVariableManager.getSession();
+
+        dataBaseHelper = new DataBaseHelper(ProfileActivity.this);
+
+        if(userId != -1){
+            //User is logged in
+            name.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
+            UserModel currentUser = dataBaseHelper.getUser(userId);
+            name.setText(currentUser.getName());
+            email.setText(currentUser.getEmail());
+            signOut.setVisibility(View.VISIBLE);
+            signIn.setVisibility(View.GONE);
+            signUp.setVisibility(View.GONE);
+        } else{
+            //user is NOT logged in
+            name.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+            signOut.setVisibility(View.GONE);
+            signIn.setVisibility(View.VISIBLE);
+            signUp.setVisibility(View.VISIBLE);
+        }
 
         //declare and grab our bottom navigation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -68,6 +109,29 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    //Takes us to our sign in activity
+    public void toSignIn(View view){
+        Intent intent = new Intent(ProfileActivity.this, SignInActivity.class);
+        startActivity(intent);
+    }
+
+    //Takes us to our sign in activity
+    public void toSignUp(View view){
+        Intent intent = new Intent(ProfileActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    //This method will delete our session variable for the unique user
+    public void logout(View view){
+        sessionVariableManager.removeSession();
+        //user is NOT logged in
+        name.setVisibility(View.GONE);
+        email.setVisibility(View.GONE);
+        signOut.setVisibility(View.GONE);
+        signIn.setVisibility(View.VISIBLE);
+        signUp.setVisibility(View.VISIBLE);
     }
 
 }

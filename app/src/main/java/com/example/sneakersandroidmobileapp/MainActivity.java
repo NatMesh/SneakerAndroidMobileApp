@@ -28,94 +28,52 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private DataBaseHelper dataBaseHelper;
-    //private GridView sneakerGridview;
-    //private RecyclerView mRecyclerView;
-    //private SneakerAdapter sneakerAdapter;
-
+    private DataBaseHelper dataBaseHelper;
+    private GridView gridViewTrendingShoes;
+    private SneakerAdapter sneakerAdapte;
+    private ArrayList<SneakerModel> sneakerTrendingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Call our DataBaseHelper object
-        //dataBaseHelper = new DataBaseHelper(MainActivity.this);
-
-        //instantiates our gridview
-        //sneakerGridview = findViewById(R.id.sneakerGridview);
-
-        //sneakerAdapter = new SneakerAdapter(MainActivity.this, dataBaseHelper.getAllSneakers());
-
-        //sneakerGridview.setAdapter(sneakerAdapter);
-
-        //This method parses our local json file and adds the objects to our sneakerList collection object
         parseJson();
+        //Call our DataBaseHelper object
+        dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
+        gridViewTrendingShoes = findViewById(R.id.gridViewTrendingShoes);
 
-        //Declare SneakerModel Object, NOTE TO SET ID TO -1 AND UNDERSTAND THAT ID WONT BE PERSISTED FROM OUR INSTANTIATION HERE BUT FROM OUR SQLITEDBHELPER
-//        SneakerModel sneakerModel = new SneakerModel();
+        sneakerTrendingList = dataBaseHelper.getTrendingSneakers();
 
-//        try{
-//            //set instance var for our sneakerModel object
-//            sneakerModel.setId(-1);
-//            sneakerModel.setBrand("Nike");
-//            sneakerModel.setCategory("Basketball");
-//            sneakerModel.setMainColour("Black");
-//            sneakerModel.setDesigner("Jason Petrie");
-//            sneakerModel.setColourWay("Black/White-Gold");
-//            sneakerModel.setGender("men");
-//            sneakerModel.setGridPicture("https://image.goat.com/240/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");
-//            sneakerModel.setMainPicture("https://image.goat.com/crop/750/attachments/product_template_pictures/images/010/439/995/original/897648_007_101.png.png");;
-//            sneakerModel.setMidsole("Air");
-//            sneakerModel.setName("LeBron 15 'Equality' PE");
-//            sneakerModel.setNickName("Equality");
-//            sneakerModel.setReleaseDate("2018-03-03");
-//            sneakerModel.setPriceCents(200000);
-//            sneakerModel.setShoeStory("The LeBron 15 ‘Equality’ PE was worn by LeBron James’ during key games in the 2018 NBA season. As a special release benefiting " +
-//                    "the Smithsonian National Museum of African American History and Culture, 400 pairs were distributed through a draw system (200 in black colorway, " +
-//                    "200 in white colorway). This pack combines both EQUALITY shoes together, a strong message from Nike’s ‘Equality’ campaign to promote fairness and " +
-//                    "respect they see in sport and translate them off the field.");
-//            sneakerModel.setUpperMaterial("");
-//
-//            //Creates toast object for testing REMOVE LATER
-//            Toast.makeText(MainActivity.this, "Object was successfully created", Toast.LENGTH_LONG).show();
-//        } catch (Exception e){
-//            Toast.makeText(MainActivity.this, "error in initializing sneakerModel object", Toast.LENGTH_LONG).show();
-//        }
+        sneakerAdapte = new SneakerAdapter(MainActivity.this, sneakerTrendingList);
 
+        gridViewTrendingShoes.setAdapter(sneakerAdapte);
 
+        //click event for our grid view when an item is clicked
+        gridViewTrendingShoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Based on the item clicked we get the object so we can use that data on another activity
+                SneakerModel selectedSneaker = sneakerTrendingList.get(i);
 
-
-        //we try the insert method we created addSneaker() which returns a boolean for whether it was successful or not
-        //boolean success = dataBaseHelper.addSneaker(sneakerModel);
-
-        //tells us via toast
-        //Toast.makeText(MainActivity.this, "Sucess= " + success, Toast.LENGTH_LONG).show();
-
-        //shows us via toast all the sneakers in our db
-        //Toast.makeText(MainActivity.this, allSneakers.toString(), Toast.LENGTH_SHORT).show();
-        //sneakerArrayAdapter = new ArrayAdapter<SneakerModel>(MainActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper.getAllSneakers());
-
-
-//        lvSneakers.setAdapter(sneakerArrayAdapter);
-//
-//        //defines our click event for the listview
-//        lvSneakers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //we find the specific object clicked and store it
-//                SneakerModel clickedSneaker = (SneakerModel) parent.getItemAtPosition(position);
-//                //Once we have our chosen object to delete we can call our delete method
-//                dataBaseHelper.deleteSneaker(clickedSneaker);
-//                Toast.makeText(MainActivity.this, "Deleted " + clickedSneaker.getName(), Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+                Intent intent = new Intent(MainActivity.this, SneakerDetailsActivity.class);
+                intent.putExtra("sneakerId", selectedSneaker.getId());
+                intent.putExtra("sneakerImage", selectedSneaker.getMainPicture());
+                intent.putExtra("sneakerName", selectedSneaker.getName());
+                intent.putExtra("sneakerBrand", selectedSneaker.getBrand());
+                intent.putExtra("sneakerColourway", selectedSneaker.getColourWay());
+                intent.putExtra("sneakerRetailPrice", selectedSneaker.getPriceCents());
+                intent.putExtra("sneakerReleaseDate", selectedSneaker.getReleaseDate());
+                intent.putExtra("sneakerStory", selectedSneaker.getShoeStory());
+                startActivity(intent);
+            }
+        });
 
         ///////////////////////////////////////////////////////
 
@@ -217,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 sneakerModel.setShoeStory(sneaker.getString("story_html"));
                 sneakerModel.setUpperMaterial(sneaker.getString("upper_material"));
 
+                //this will add all the sneakers from our json file to our SNEAKER_TABLE
+                //dataBaseHelper.addSneaker(sneakerModel);
                 Log.d("test sneaker", sneakerModel.getName() + "    " + jsonArray.length());
             }
 
