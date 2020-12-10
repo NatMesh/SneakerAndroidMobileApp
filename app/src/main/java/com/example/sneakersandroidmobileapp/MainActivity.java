@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DataBaseHelper dataBaseHelper;
     private GridView gridViewTrendingShoes;
-    private SneakerAdapter sneakerAdapte;
+    private SneakerAdapter sneakerAdapter;
     private ArrayList<SneakerModel> sneakerTrendingList;
 
     @Override
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         sneakerTrendingList = dataBaseHelper.getTrendingSneakers();
 
-        sneakerAdapte = new SneakerAdapter(MainActivity.this, sneakerTrendingList);
+        sneakerAdapter = new SneakerAdapter(MainActivity.this, sneakerTrendingList);
 
-        gridViewTrendingShoes.setAdapter(sneakerAdapte);
+        gridViewTrendingShoes.setAdapter(sneakerAdapter);
 
         //click event for our grid view when an item is clicked
         gridViewTrendingShoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
